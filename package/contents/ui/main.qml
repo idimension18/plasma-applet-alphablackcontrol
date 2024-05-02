@@ -1,22 +1,24 @@
 import QtQuick 2.4
-import QtQuick.Controls 1.0
+import QtQuick.Controls
 import QtQuick.Layouts 1.1
-import org.kde.plasma.plasmoid 2.0
-import org.kde.plasma.core 2.0 as PlasmaCore
-import org.kde.plasma.components 2.0 as PlasmaComponents
-import org.kde.plasma.extras 2.0 as PlasmaExtras
-import org.kde.kcoreaddons 1.0 as KCoreAddons
+import org.kde.plasma.plasmoid
+import org.kde.plasma.core as PlasmaCore
+import org.kde.plasma.components as PlasmaComponents
+import org.kde.plasma.extras as PlasmaExtras
+import org.kde.coreaddons as KCoreAddons
+import org.kde.kirigami as Kirigami
+
 
 import "lib"
 
-Item {
+PlasmoidItem {
 	id: main
 
 	property string targetDesktopTheme: 'breeze-alphablack'
 
 	property bool validDesktopTheme: theme.themeName == targetDesktopTheme || theme.themeName == 'breeze-dark'
 	property bool widgetsUnlocked: plasmoid.immutability === PlasmaCore.Types.Mutable
-	Plasmoid.status: validDesktopTheme && widgetsUnlocked ? PlasmaCore.Types.ActiveStatus : PlasmaCore.Types.HiddenStatus
+    //status: validDesktopTheme && widgetsUnlocked ? PlasmaCore.Types.ActiveStatus : PlasmaCore.Types.HiddenStatus
 
 	property string taskStyle: 'inside'
 	property color themeAccentColor: "#000000"
@@ -206,7 +208,7 @@ Item {
 
 
 	//----
-	Plasmoid.fullRepresentation: Item {
+    fullRepresentation: Item {
 		id: popupView
 		property bool loaded: false
 		Component.onCompleted: loaded = true
@@ -225,13 +227,14 @@ Item {
 		}
 
 
-		PlasmaExtras.ScrollArea {
+		PlasmaComponents.ScrollView { // originaly was PlasmaExtras.ScrollArea
 			id: scrollView
 			anchors.fill: parent
-			readonly property int contentWidth: contentItem ? contentItem.width : width
-			readonly property int contentHeight: contentItem ? contentItem.height : 0 // Warning: Binding loop
-			readonly property int viewportWidth: viewport ? viewport.width : width
-			readonly property int viewportHeight: viewport ? viewport.height : height
+			// these properties seems already defined as FINAL in PlasmaComponents
+			//readonly property int contentWidth: contentItem ? contentItem.width : width
+			//readonly property int contentHeight: contentItem ? contentItem.height : 0 // Warning: Binding loop
+			//readonly property int viewportWidth: viewport ? viewport.width : width
+			//readonly property int viewportHeight: viewport ? viewport.height : height
 
 			ColumnLayout {
 				width: scrollView.viewportWidth
@@ -240,7 +243,7 @@ Item {
 				ColumnLayout {
 					spacing: 0
 
-					PlasmaExtras.Heading {
+                    Kirigami.Heading {
 						text: i18n("Accent Color")
 						level: 3
 						lineHeight: 1
@@ -257,7 +260,7 @@ Item {
 					Layout.fillWidth: true
 					value: main.themeAccentColor
 					label: ""
-					showAlphaChannel: false
+					//showAlphaChannel: false does not exsist anymore
 					buttonOutlineColor: theme.textColor
 					
 					onValueChanged: apply()
@@ -280,7 +283,7 @@ Item {
 					Layout.fillWidth: true
 					value: main.themeTextColor
 					label: ""
-					showAlphaChannel: false
+					//showAlphaChannel: false
 					buttonOutlineColor: theme.textColor
 					
 					onValueChanged: apply()
@@ -303,7 +306,7 @@ Item {
 					Layout.fillWidth: true
 					value: main.themeHighlightColor
 					label: ""
-					showAlphaChannel: false
+					//showAlphaChannel: false
 					buttonOutlineColor: theme.textColor
 					
 					onValueChanged: apply()
@@ -336,19 +339,19 @@ Item {
 				RowLayout {
 					PlasmaComponents.Button {
 						text: i18n("Apply Colors")
-						iconName: "dialog-ok-apply"
+						icon.name: "dialog-ok-apply"
 						onClicked: main.applyTitleBarColors()
 						implicitWidth: minimumWidth
 					}
 					PlasmaComponents.Button {
 						text: i18n("Reset Colors")
-						iconName: "edit-undo-symbolic"
+						icon.name: "edit-undo-symbolic"
 						onClicked: main.resetTitleBarColors()
 						implicitWidth: minimumWidth
 					}
 				}
 
-				PlasmaExtras.Heading {
+                Kirigami.Heading {
 					text: i18n("Opacity")
 					level: 3
 				}
@@ -382,7 +385,7 @@ Item {
 					setValueFunc: widgetOpacityProperty.deferredSet
 				}
 
-				PlasmaExtras.Heading {
+                Kirigami.Heading {
 					text: i18n("Padding")
 					level: 3
 				}
@@ -392,8 +395,8 @@ Item {
 					text: i18n("Popup:")
 					value: main.dialogPadding
 					setValueFunc: dialogPaddingProperty.deferredSet
-					minimumValue: 0
-					maximumValue: 40
+					//minimumValue: 0
+					//maximumValue: 40
 					stepSize: 1
 
 					function formatValue(val) {
@@ -406,8 +409,8 @@ Item {
 					text: i18n("Panel:")
 					value: main.panelPadding
 					setValueFunc: panelPaddingProperty.deferredSet
-					minimumValue: 0
-					maximumValue: 40
+					//minimumValue: 0
+					//maximumValue: 40
 					stepSize: 1
 
 					function formatValue(val) {
@@ -415,7 +418,7 @@ Item {
 					}
 				}
 
-				PlasmaExtras.Heading {
+                Kirigami.Heading {
 					text: i18n("Taskbar")
 					level: 3
 				}
@@ -424,7 +427,7 @@ Item {
 					Layout.fillWidth: true
 					PlasmaComponents.RadioButton {
 						id: frameInsideButton
-						exclusiveGroup: ExclusiveGroup { id: frameGroup }
+						//exclusiveGroup: ExclusiveGroup { id: frameGroup }
 						checked: main.taskStyle == 'inside'
 						onCheckedChanged: {
 							if (!(main.configLoaded && popupView.loaded)) return;
@@ -446,7 +449,7 @@ Item {
 					Layout.fillWidth: true
 					PlasmaComponents.RadioButton {
 						id: frameOutsideButton
-						exclusiveGroup: frameGroup
+						//exclusiveGroup: frameGroup
 						checked: main.taskStyle == 'outside'
 						onCheckedChanged: {
 							if (!(main.configLoaded && popupView.loaded)) return;
@@ -471,7 +474,7 @@ Item {
 				}
 
 				RowLayout {
-					PlasmaCore.IconItem {
+                        Kirigami.Icon {
 						source: "unlock"
 						Layout.preferredWidth: units.iconSizes.medium
 						Layout.preferredHeight: units.iconSizes.medium
@@ -492,7 +495,7 @@ Item {
 
 				PlasmaComponents.Button {
 					text: i18n("Reset To Defaults")
-					iconName: "edit-undo-symbolic"
+					icon.name: "edit-undo-symbolic"
 					onClicked: main.resetAllToDefaults()
 					implicitWidth: minimumWidth
 					Layout.alignment: Qt.AlignHCenter

@@ -1,6 +1,6 @@
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
-import org.kde.plasma.components 2.0 as PlasmaComponents
+import org.kde.plasma.components as PlasmaComponents
 
 RowLayout {
 	id: opacitySliderItem
@@ -13,8 +13,8 @@ RowLayout {
 
 	property var setValueFunc: function() {}
 
-	property alias minimumValue: opacitySlider.minimumValue
-	property alias maximumValue: opacitySlider.maximumValue
+	//property alias minimumValue: opacitySlider.minimumValue
+	//property alias maximumValue: opacitySlider.maximumValue
 	property alias stepSize: opacitySlider.stepSize
 
 	PlasmaComponents.Label {
@@ -23,8 +23,8 @@ RowLayout {
 	}
 	PlasmaComponents.Slider {
 		id: opacitySlider
-		minimumValue: 0
-		maximumValue: 1
+		//minimumValue: 0
+		//maximumValue: 1
 		stepSize: 0.01
 		Layout.fillWidth: true
 		Layout.fillHeight: true

@@ -1,13 +1,13 @@
 // Version 3
 
 import QtQuick 2.0
-import QtQuick.Controls 1.0
+import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
-import QtQuick.Dialogs 1.2
+import QtQuick.Dialogs
 import QtQuick.Window 2.2
 
-import org.kde.plasma.core 2.0 as PlasmaCore
-import org.kde.plasma.components 2.0 as PlasmaComponents
+import org.kde.plasma.core as PlasmaCore
+import org.kde.plasma.components as PlasmaComponents
 
 import ".."
 
@@ -15,12 +15,12 @@ RowLayout {
 	id: configColor
 	spacing: 2
 	// Layout.fillWidth: true
-	Layout.maximumWidth: 300 * units.devicePixelRatio
+	Layout.maximumWidth: 300 * 1
 
 	property alias label: label.text
 	property alias labelColor: label.color
 	property alias horizontalAlignment: label.horizontalAlignment
-	property alias showAlphaChannel: dialog.showAlphaChannel
+	//property alias showAlphaChannel: colorDialog.showAlphaChannel
 	property color buttonOutlineColor: {
 		if (valueColor.r + valueColor.g + valueColor.b > 0.5) {
 			return "#BB000000" // Black outline
@@ -108,13 +108,13 @@ RowLayout {
 	}
 
 	ColorDialog {
-		id: dialog
+		id: colorDialog
 		visible: false
 		modality: Qt.WindowModal
 		title: configColor.label
-		showAlphaChannel: true
-		color: configColor.valueColor
-		onCurrentColorChanged: {
+		//showAlphaChannel: true
+		//color: configColor.valueColor
+		onAccepted: {
 			if (visible && color != currentColor) {
 				configColor.value = currentColor
 			}
