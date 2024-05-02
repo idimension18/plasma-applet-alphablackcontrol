@@ -257,7 +257,7 @@ PlasmoidItem {
 					Layout.fillWidth: true
 					value: main.themeAccentColor
 					label: ""
-					buttonOutlineColor: theme.textColor
+					buttonOutlineColor: Kirigami.Theme.textColor
 					
 					onValueChanged: apply()
 					function apply() {
