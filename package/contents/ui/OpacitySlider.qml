@@ -13,8 +13,8 @@ RowLayout {
 
 	property var setValueFunc: function() {}
 
-	//property alias minimumValue: opacitySlider.minimumValue
-	//property alias maximumValue: opacitySlider.maximumValue
+	property alias minimumValue: opacitySlider.from
+	property alias maximumValue: opacitySlider.to
 	property alias stepSize: opacitySlider.stepSize
 
 	PlasmaComponents.Label {
@@ -23,8 +23,8 @@ RowLayout {
 	}
 	PlasmaComponents.Slider {
 		id: opacitySlider
-		//minimumValue: 0
-		//maximumValue: 1
+		from: 0
+		to: 1
 		stepSize: 0.01
 		Layout.fillWidth: true
 		Layout.fillHeight: true
@@ -42,7 +42,7 @@ RowLayout {
 
 		TextMetrics {
 			id: widthMetrics
-			text: opacitySliderItem.formatValue(opacitySlider.maximumValue)
+			text: opacitySliderItem.formatValue(opacitySlider.to)
 			font: valueLabel.font
 		}
 	}

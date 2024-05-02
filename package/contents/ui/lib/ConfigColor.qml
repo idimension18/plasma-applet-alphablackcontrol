@@ -20,7 +20,6 @@ RowLayout {
 	property alias label: label.text
 	property alias labelColor: label.color
 	property alias horizontalAlignment: label.horizontalAlignment
-	//property alias showAlphaChannel: colorDialog.showAlphaChannel
 	property color buttonOutlineColor: {
 		if (valueColor.r + valueColor.g + valueColor.b > 0.5) {
 			return "#BB000000" // Black outline
@@ -30,7 +29,7 @@ RowLayout {
 	}
 
 	property TextField textField: textField
-	property ColorDialog dialog: dialog
+	property ColorDialog dialog: colorDialog
 
 	property string configKey: ''
 	property string defaultColor: ''
@@ -81,7 +80,7 @@ RowLayout {
 		Layout.preferredHeight: textField.height
 		hoverEnabled: true
 
-		onClicked: dialog.open()
+		onClicked: colorDialog.open()
 
 		Rectangle {
 			anchors.fill: parent
@@ -109,15 +108,11 @@ RowLayout {
 
 	ColorDialog {
 		id: colorDialog
-		visible: false
 		modality: Qt.WindowModal
 		title: configColor.label
-		//showAlphaChannel: true
-		//color: configColor.valueColor
+		selectedColor: configColor.valueColor
 		onAccepted: {
-			if (visible && color != currentColor) {
-				configColor.value = currentColor
-			}
+			configColor.value = selectedColor
 		}
 	}
 }

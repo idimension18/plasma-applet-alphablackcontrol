@@ -260,7 +260,6 @@ PlasmoidItem {
 					Layout.fillWidth: true
 					value: main.themeAccentColor
 					label: ""
-					//showAlphaChannel: false does not exsist anymore
 					buttonOutlineColor: theme.textColor
 					
 					onValueChanged: apply()
@@ -283,7 +282,6 @@ PlasmoidItem {
 					Layout.fillWidth: true
 					value: main.themeTextColor
 					label: ""
-					//showAlphaChannel: false
 					buttonOutlineColor: theme.textColor
 					
 					onValueChanged: apply()
@@ -306,7 +304,6 @@ PlasmoidItem {
 					Layout.fillWidth: true
 					value: main.themeHighlightColor
 					label: ""
-					//showAlphaChannel: false
 					buttonOutlineColor: theme.textColor
 					
 					onValueChanged: apply()
@@ -341,13 +338,13 @@ PlasmoidItem {
 						text: i18n("Apply Colors")
 						icon.name: "dialog-ok-apply"
 						onClicked: main.applyTitleBarColors()
-						implicitWidth: minimumWidth
+						//implicitWidth: minimumWidth
 					}
 					PlasmaComponents.Button {
 						text: i18n("Reset Colors")
 						icon.name: "edit-undo-symbolic"
 						onClicked: main.resetTitleBarColors()
-						implicitWidth: minimumWidth
+						//implicitWidth: minimumWidth
 					}
 				}
 
@@ -395,8 +392,8 @@ PlasmoidItem {
 					text: i18n("Popup:")
 					value: main.dialogPadding
 					setValueFunc: dialogPaddingProperty.deferredSet
-					//minimumValue: 0
-					//maximumValue: 40
+					minimumValue: 0
+					maximumValue: 40
 					stepSize: 1
 
 					function formatValue(val) {
@@ -409,8 +406,8 @@ PlasmoidItem {
 					text: i18n("Panel:")
 					value: main.panelPadding
 					setValueFunc: panelPaddingProperty.deferredSet
-					//minimumValue: 0
-					//maximumValue: 40
+					minimumValue: 0
+					maximumValue: 40
 					stepSize: 1
 
 					function formatValue(val) {
@@ -423,11 +420,14 @@ PlasmoidItem {
 					level: 3
 				}
 
+				ButtonGroup { id: radioGroup }
+
 				RowLayout {
 					Layout.fillWidth: true
 					PlasmaComponents.RadioButton {
 						id: frameInsideButton
 						//exclusiveGroup: ExclusiveGroup { id: frameGroup }
+						ButtonGroup.group: radioGroup
 						checked: main.taskStyle == 'inside'
 						onCheckedChanged: {
 							if (!(main.configLoaded && popupView.loaded)) return;
@@ -450,6 +450,7 @@ PlasmoidItem {
 					PlasmaComponents.RadioButton {
 						id: frameOutsideButton
 						//exclusiveGroup: frameGroup
+						ButtonGroup.group: radioGroup
 						checked: main.taskStyle == 'outside'
 						onCheckedChanged: {
 							if (!(main.configLoaded && popupView.loaded)) return;
@@ -497,7 +498,7 @@ PlasmoidItem {
 					text: i18n("Reset To Defaults")
 					icon.name: "edit-undo-symbolic"
 					onClicked: main.resetAllToDefaults()
-					implicitWidth: minimumWidth
+					//implicitWidth: minimumWidth
 					Layout.alignment: Qt.AlignHCenter
 				}
 
