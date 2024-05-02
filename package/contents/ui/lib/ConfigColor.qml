@@ -8,6 +8,7 @@ import QtQuick.Window 2.2
 
 import org.kde.plasma.core as PlasmaCore
 import org.kde.plasma.components as PlasmaComponents
+import org.kde.kirigami as Kirigami
 
 import ".."
 
@@ -86,7 +87,7 @@ RowLayout {
 			anchors.fill: parent
 			color: configColor.valueColor
 			border.width: 2
-			border.color: parent.containsMouse ? theme.highlightColor : buttonOutlineColor
+			border.color: parent.containsMouse ? Kirigami.Theme.highlightColor : buttonOutlineColor
 		}
 	}
 
