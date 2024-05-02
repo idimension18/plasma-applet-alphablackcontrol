@@ -213,12 +213,10 @@ PlasmoidItem {
 		property bool loaded: false
 		Component.onCompleted: loaded = true
 
-		Layout.minimumWidth: units.gridUnit * 1
-		Layout.minimumHeight: units.gridUnit * 1
-		Layout.preferredWidth: units.gridUnit * 16
+		Layout.minimumWidth: Kirigami.Units.gridUnit * 1
+		Layout.minimumHeight: Kirigami.Units.gridUnit * 1
+		Layout.preferredWidth: Kirigami.Units.gridUnit * 16
 		Layout.preferredHeight: scrollView.contentHeight
-		// Layout.maximumWidth: plasmoid.screenGeometry.width
-		// Layout.maximumHeight: plasmoid.screenGeometry.height
 
 		function updateConfigBindings() {
 			accentColorSelector.value = Qt.binding(function() { return main.themeAccentColor })
@@ -227,19 +225,18 @@ PlasmoidItem {
 		}
 
 
-		PlasmaComponents.ScrollView { // originaly was PlasmaExtras.ScrollArea
+		PlasmaComponents.ScrollView {
 			id: scrollView
 			anchors.fill: parent
-			// these properties seems already defined as FINAL in PlasmaComponents
-			//readonly property int contentWidth: contentItem ? contentItem.width : width
-			//readonly property int contentHeight: contentItem ? contentItem.height : 0 // Warning: Binding loop
+
+			contentWidth: contentItem ? contentItem.width : width
+			//contentHeight: contentItem ? contentItem.height : 0 // Warning: Binding loop
 			//readonly property int viewportWidth: viewport ? viewport.width : width
 			//readonly property int viewportHeight: viewport ? viewport.height : height
 
 			ColumnLayout {
-				width: scrollView.viewportWidth
-				// width: parent.width
-				
+				width: scrollView.contentWidth
+
 				ColumnLayout {
 					spacing: 0
 
@@ -282,7 +279,7 @@ PlasmoidItem {
 					Layout.fillWidth: true
 					value: main.themeTextColor
 					label: ""
-					buttonOutlineColor: theme.textColor
+					buttonOutlineColor: Kirigami.Theme.textColor
 					
 					onValueChanged: apply()
 					function apply() {
@@ -304,7 +301,7 @@ PlasmoidItem {
 					Layout.fillWidth: true
 					value: main.themeHighlightColor
 					label: ""
-					buttonOutlineColor: theme.textColor
+					buttonOutlineColor: Kirigami.Theme.textColor
 					
 					onValueChanged: apply()
 					function apply() {
